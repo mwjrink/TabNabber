@@ -1,7 +1,11 @@
 import React from 'react';
 import logo from '../logo.svg';
+import { Page, Card } from '../Style/containers';
+import { useHistory } from 'react-router';
 
 export function Popup() {
+    const history = useHistory();
+
     // chrome.storage.sync
 
     // chrome.storage.sync.set({key: value}, function() {
@@ -19,18 +23,18 @@ export function Popup() {
     });
 
     // chrome.tabs.remove(integer or array of integer tabIds, function callback)
+    let link = '';
+    chrome.management.getSelf((result: chrome.management.ExtensionInfo) => {
+        link = result.homepageUrl ?? '/Manager';
+        console.log(result.homepageUrl);
+    });
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Page>
+            <Card style={{ height: '300px', width: '200px' }}>
+                Hello World!
+                <button onClick={() => chrome.tabs.create({ url: link })}>Manager</button>
+            </Card>
+        </Page>
     );
 }

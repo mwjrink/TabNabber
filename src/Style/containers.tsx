@@ -6,8 +6,9 @@ interface DefaultProps {
     height?: number;
 }
 
+// border-radius: 2px;
 const defaults = css<DefaultProps>`
-    border-radius: 2px;
+    border-radius: 4px;
     border: none;
     box-shadow: ${({ height }) => BoxShadow(height ?? 3)};
 `;
@@ -28,14 +29,12 @@ const flex = css<FlexProps>`
 export const Card = styled.div`
     ${flex}
     ${defaults}
+    background: ${theme.colors.surface};
+    color: ${theme.colors.onSurface};
 `;
 
 export const Page = styled.div`
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
     padding: 0px ${theme.spacing.margin};
-    background: ${theme.colors.background.lightTheme.dark};
+    background: ${theme.colors.background};
+    color: ${theme.colors.onBackground};
 `;
