@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>svg collection</title>
+  <style>
+    html {
+      font-family: sans-serif;
+      line-height: 1.15;
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      margin: 0
+    }
+
+    article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
+      display: block
+    }
+
+    audio, canvas, progress, video {
+      display: inline-block
+    }
+
+    .si-figure {
+      padding: 5px 0;
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      background-color: #f9f9f9;
+      outline: 1px solid #fff;
+      height: 100px;
+      color: #999;
+      vertical-align: top;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer
+    }
+
+    .si-figure svg {
+      width: 50px;
+      height: 50px;
+      fill: gray
+    }
+
+    .si-figure:hover {
+      background-color: #dfd;
+      color: #337ab7
+    }
+
+    .si-figure:hover svg {
+      fill: #337ab7
+    }
+
+    .si-figure.selected {
+      background-color: #337ab7;
+      color: #fff;
+      opacity: .9
+    }
+
+    .si-figure.selected svg {
+      fill: #fff
+    }
+
+    @media only screen and (min-width: 768px) {
+      .si-figure {
+        width: 12%
+      }
+    }
+
+    @media only screen and (max-width: 768px) {
+      .si-figure {
+        width: 24%
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .si-figure {
+        width: 48%
+      }
+    }
+
+    .si.inline {
+      height: 1.2em;
+      width: 1.2em;
+      vertical-align: sub
+    }
+
+    .si.white {
+      fill: #fff
+    }
+  </style>
+</head>
+<body>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="width:0;height:0;position:absolute;overflow:hidden;">
+  <defs>
+<symbol id="icons-arrowLeft" viewBox="0 0 575.16796875 898.176025390625"><path d="M0 447.232L447.168 0l128 131.008-321.151 318.016L575.168 769.92 446.912 898.176 0 447.232z"/></symbol>
+<symbol id="icons-arrowRight" viewBox="0 0 575.16796875 898.112060546875"><path d="M128.255 898.112L.063 769.856 321.151 448.96 0 131.008 128 0l447.168 447.232-446.912 450.88z"/></symbol>
+  </defs>
+</svg>
+
+<article>
+  <figure class="si-figure">
+    <div id="figure-icons-arrowLeft">
+      <div class="si-wrapper icons-arrowLeft">
+        <svg class="si">
+          <use xlink:href="#icons-arrowLeft"></use>
+        </svg>
+      </div>
+    </div>
+    <figcaption>icons-arrowLeft</figcaption>
+  </figure>
+  <figure class="si-figure">
+    <div id="figure-icons-arrowRight">
+      <div class="si-wrapper icons-arrowRight">
+        <svg class="si">
+          <use xlink:href="#icons-arrowRight"></use>
+        </svg>
+      </div>
+    </div>
+    <figcaption>icons-arrowRight</figcaption>
+  </figure>
+</article>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="width:0;height:0;position:absolute;overflow:hidden;">
+  <defs>
+<symbol id="icons-arrowLeft" viewBox="0 0 575.16796875 898.176025390625"><path d="M0 447.232L447.168 0l128 131.008-321.151 318.016L575.168 769.92 446.912 898.176 0 447.232z"/></symbol>
+<symbol id="icons-arrowRight" viewBox="0 0 575.16796875 898.112060546875"><path d="M128.255 898.112L.063 769.856 321.151 448.96 0 131.008 128 0l447.168 447.232-446.912 450.88z"/></symbol>
+  </defs>
+</svg>
