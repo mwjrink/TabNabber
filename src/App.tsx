@@ -1,19 +1,38 @@
+import { Popout } from './Pages/Popout/Popout';
+import { Manager } from './Pages/Manager/Manager';
 import React from 'react';
-import { MemoryRouter as Router, Switch, Route } from 'react-router';
-import { Popup } from './Pages/Popup';
-import { Manager } from './Pages/Manager';
+import { ThemeProvider } from 'styled-components';
+import { themeGenerator } from './Style/theme';
+import { CreateSettingsContext, Settings } from './utils';
+import { GlobalStyles } from './Style/Global.Styled';
 
-function App() {
-  // chrome.contextMenus.create(object createProperties, function callback)
+interface AppProps {
+    popout: boolean;
+}
 
-  //chrome.management.getSelf(function callback)
+// ICON IS A BOOK WITH LOTS OF STICKIES AND SHIT OUT THE SIDE
+// goblin/smeagle looking hand holding it?
+
+function App({ popout }: AppProps) {
+    const settings: Settings = {
+        closeTabs: false,
+        includePinnned: false,
+        width: 500,
+        height: 750,
+    };
+
+    const theme = themeGenerator(false);
+    const SettingsContext = CreateSettingsContext(settings);
+
     return (
-        <Router initialEntries={['/', '/Manager']} initialIndex={0}>
-            <Switch>
-                <Route exact path='/' component={Popup} />
-                <Route path='/Manager' component={Manager} />
-            </Switch>
-        </Router>
+        <SettingsContext.Provider value={settings}>
+            <ThemeProvider theme={theme}>
+                <>
+                    <GlobalStyles settingsWidth={`${settings.width}px`} settingsHeight={`${settings.height}px`} />
+                    <>{popout ? <Popout /> : <Manager />}</>
+                </>
+            </ThemeProvider>
+        </SettingsContext.Provider>
     );
 }
 

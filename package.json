@@ -14,17 +14,19 @@
     "@types/react-router": "^5.1.4",
     "@types/styled-components": "^5.0.0",
     "react": "^16.12.0",
+    "react-app-rewire-hot-loader": "^2.0.1",
+    "react-app-rewire-multiple-entry": "^2.1.0",
+    "react-app-rewired": "^2.1.5",
     "react-dom": "^16.12.0",
-    "react-router": "^5.1.2",
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.1",
     "svg-icon": "^0.8.2",
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "build:icons": "svg-icon build --source ./icons.json --target public/icons --name icons"
   },
@@ -42,5 +44,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

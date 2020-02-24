@@ -1,13 +1,10 @@
 import React from 'react';
-import logo from '../logo.svg';
-import { Page, Card } from '../Style/containers';
+import { Card, Page } from '../../Style/Containers.Styled';
 
 export function Manager() {
     return (
         <Page>
-            <Card style={{ height: '300px', width: '200px' }}>
-                Hello World!
-            </Card>
+            <Card style={{ height: '300px', width: '200px' }}>Hello World! ~ Manager</Card>
         </Page>
         // <div className="App">
         //     <header className="App-header">
