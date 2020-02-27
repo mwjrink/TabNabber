@@ -20,18 +20,6 @@ export const StyledDrawer = styled.nav<StyledDrawerProps>`
         ease-in-out;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-101%)')};
 
-    /* Don't fret. try this (quick IN, slow OUT):
-
-.main img {
-  width: 25%;
-  height: 100%;
-  transition: width 2s ease;
-}
-.main img:hover {
-  width: 50%;
-  transition: width .5s ease;
-} */
-
     @media (max-width: 20%) {
         width: 100%;
     }

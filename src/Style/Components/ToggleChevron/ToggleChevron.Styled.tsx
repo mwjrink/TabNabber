@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { AnimationDurTFn } from '../../utils';
 
 interface StyledToggleChevronProps {
     toggled: boolean;
@@ -20,13 +21,7 @@ export const StyledToggleChevron = styled.span<StyledToggleChevronProps>`
         height: 0.15rem;
         background: ${({ backgroundColor }) => backgroundColor};
         display: inline-block;
-        transition: transform
-            ${({
-                toggled,
-                theme: {
-                    animation: { inSpeed, outSpeed, inTimingFn, outTimingFn },
-                },
-            }) => (toggled ? inSpeed.concat(' ', inTimingFn) : outSpeed.concat(' ', outTimingFn))};
+        transition: transform ${({ theme, toggled }) => AnimationDurTFn(theme, toggled)};
     }
 
     &::before {

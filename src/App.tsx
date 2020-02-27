@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { themeGenerator } from './Style/theme';
 import { CreateSettingsContext, Settings } from './utils';
 import { GlobalStyles } from './Style/Global.Styled';
+import './App.css';
 
 interface AppProps {
     popout: boolean;
@@ -17,8 +18,10 @@ function App({ popout }: AppProps) {
     const settings: Settings = {
         closeTabs: false,
         includePinnned: false,
-        width: 500,
-        height: 750,
+        width: 450,
+        height: 600, // max for chrome extension
+        ignoreNewtabs: false,
+        unsuspendTabs: true,
     };
 
     const theme = themeGenerator(false);

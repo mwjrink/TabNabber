@@ -9057,11 +9057,6 @@ react-app-polyfill@^1.0.6:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-app-rewire-hot-loader@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-app-rewire-hot-loader/-/react-app-rewire-hot-loader-2.0.1.tgz#9b47d299dac4d861dafdf18b49c3698d0ff04a52"
-  integrity sha512-XTUPOv5q0zJeEtXECfilDPfqCiktSVbIyupiqigIHOO8EMZec2YfNpwZzqDWMu3yfaEHRs54qRCcCgRR/1w3EQ==
-
 react-app-rewire-multiple-entry@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-app-rewire-multiple-entry/-/react-app-rewire-multiple-entry-2.1.0.tgz#86c2a7238b68d3aab1c933fb46bcdc7ae7121093"

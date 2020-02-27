@@ -5,6 +5,8 @@ export interface Settings {
     includePinnned: boolean;
     width: number;
     height: number;
+    ignoreNewtabs: boolean;
+    unsuspendTabs: boolean;
 }
 
 let context: React.Context<Settings>;

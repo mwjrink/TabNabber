@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Burger from '../Burger';
-import { StyledTopBar } from './TopBar.Styled';
-import { Text } from '../../Text.Styled';
-import { Spacer } from '../../Containers.Styled';
+import SearchBar from '../SearchBar';
+import { StyledTopBar, Title } from './TopBar.Styled';
 
 interface TopBarProps {
     navDrawerOpen: boolean;
@@ -10,11 +9,15 @@ interface TopBarProps {
 }
 
 function TopBar({ navDrawerOpen, setNavDrawerOpen }: TopBarProps) {
+    const [sbActive, setSbActive] = useState();
+
     return (
-        <StyledTopBar justifyContent="space-between" alignItems="center" flexDirection="row" height={4}>
-            <Burger toggled={navDrawerOpen} setToggled={setNavDrawerOpen} />
-            <Text.H4>Title ;^)</Text.H4>
-            <Spacer width="2rem" height="2rem" />
+        <StyledTopBar justifyContent="space-between" alignItems="center" flexDirection="row" materialHeight={4}>
+            <Burger hidden={sbActive} toggled={navDrawerOpen} setToggled={setNavDrawerOpen} />
+            <Title hidden={sbActive}>Groups</Title>
+            <SearchBar active={sbActive} setActive={setSbActive} />
+            {/* // search for sure, maybe ?settings? */}
+            {/* <Spacer width="2rem" height="2rem" />  */}
         </StyledTopBar>
     );
 }

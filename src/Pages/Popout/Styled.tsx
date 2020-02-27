@@ -25,18 +25,20 @@ interface PopoutContainerProps {
 }
 
 export const PopoutContainer = styled.div<PopoutContainerProps>`
-    /* position: absolute;
+    position: absolute;
     top: 0;
-    left: 0; */
+    left: 0;
     width: ${({ width }) => width}px;
     height: ${({ height }) => height}px;
 `;
 
 export const PopoutPage = styled.div<FlexProps>`
     overflow: auto;
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 90%;
+    left: 0;
+    right: 0;
     bottom: 0;
     padding: ${({ theme }) => theme.spacing.margin};
     background: ${({ theme }) => theme.colors.background};

@@ -1,9 +1,15 @@
 import React from 'react';
 import { StyledBurger } from './Burger.Styled';
 
-const Burger = ({ toggled, setToggled }: { toggled: boolean; setToggled: (value: boolean) => void }) => {
+interface BurgerProps {
+    toggled: boolean;
+    setToggled: (value: boolean) => void;
+    hidden: boolean
+}
+
+const Burger = ({ toggled, setToggled, hidden }: BurgerProps) => {
     return (
-        <StyledBurger toggled={toggled} onClick={() => setToggled(!toggled)}>
+        <StyledBurger toggled={toggled} hidden={hidden} onClick={() => setToggled(!toggled)}>
             <div />
             <div />
             <div />

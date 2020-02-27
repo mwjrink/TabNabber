@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BoxShadow } from '../../utils';
+import { BoxShadow, AnimationDurTFn } from '../../utils';
 
 interface StyledGroupCardProps {
     expanded: boolean;
@@ -9,7 +9,6 @@ export const StyledGroupCard = styled.div<StyledGroupCardProps>`
     border-radius: 2px;
     border: none;
 
-    transition: height ${({ expanded, theme }) => (expanded ? theme.animation.inSpeed : theme.animation.outSpeed)};
     background: ${({ theme }) => theme.colors.surface};
     color: ${({ theme }) => theme.colors.onSurface};
     
@@ -20,9 +19,16 @@ export const StyledGroupCard = styled.div<StyledGroupCardProps>`
 
     box-shadow: ${BoxShadow(1)};
     opacity: 1;
+    
+    /* // force this onto its own layer to avoid rerendering unecessarily */
+    /* // and yes, both of them prevent different rerenders and therefore have value */
+    transform: translateZ(0);
 
     &::after {
-        content: ' ';    
+        content: ' ';
+        /* // force this onto its own layer to avoid rerendering unecessarily */
+        /* // and yes, both of them prevent different rerenders and therefore have value */
+        transform: translateZ(0);
 
         position: absolute;
         width: 100%;
@@ -37,11 +43,7 @@ export const StyledGroupCard = styled.div<StyledGroupCardProps>`
 
         box-shadow: ${BoxShadow(4)};
         opacity: 0;
-        transition: opacity ${({
-            theme: {
-                animation: { outSpeed, outTimingFn },
-            },
-        }) => outSpeed.concat(' ', outTimingFn)};
+        transition: opacity ${({ theme }) => AnimationDurTFn(theme, 'out')};
 
         /* allow click through */
         pointer-events: none;
@@ -49,11 +51,7 @@ export const StyledGroupCard = styled.div<StyledGroupCardProps>`
 
     &:hover::after {
         opacity: 1;
-        transition: opacity ${({
-            theme: {
-                animation: { inSpeed, inTimingFn },
-            },
-        }) => inSpeed.concat(' ', inTimingFn)};
+        transition: opacity  ${({ theme }) => AnimationDurTFn(theme, 'in')};
     }
 `;
 
@@ -80,4 +78,27 @@ export const StyledGroupCardTopAppBar = styled.div`
     align-items: center;
     cursor: pointer;
     padding: 1rem 2rem;
+`;
+
+interface StyledTabListContainerProps {
+    expanded: boolean;
+}
+
+export const StyledTabListContainer = styled.div<StyledTabListContainerProps>`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    /* // TODO: @Max, figure out these fucking transitions */
+    /* max-height: ${({ expanded }) => (expanded ? '999px' : '0px')};
+    opacity: ${({ expanded }) => (expanded ? '1' : '0')};
+    transition: max-height
+        ${({
+            theme: {
+                animation: { inSpeed, inTimingFn },
+            },
+        }) => '5s'.concat(' ', inTimingFn)};
+        AnimationDurTFn(HRDRRDHDJD)
+    transition-property: max-height, opacity; */
 `;

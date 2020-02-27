@@ -2,13 +2,13 @@ import styled, { css } from 'styled-components';
 import { BoxShadow } from './utils';
 
 export interface DefaultProps {
-    height?: number;
+    materialHeight?: number;
 }
 
 export const defaults = css<DefaultProps>`
     border-radius: 2px;
     border: none;
-    box-shadow: ${({ height }) => BoxShadow(height ?? 1)};
+    box-shadow: ${({ materialHeight }) => BoxShadow(materialHeight ?? 1)};
 `;
 
 export interface FlexProps {

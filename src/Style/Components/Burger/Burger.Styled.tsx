@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { AnimationDurTFn } from '../../utils';
 
 interface StyledBurgerProps {
     toggled: boolean;
+    hidden: boolean;
 }
 
 export const StyledBurger = styled.button<StyledBurgerProps>`
@@ -17,6 +19,10 @@ export const StyledBurger = styled.button<StyledBurgerProps>`
     border: none;
     cursor: pointer;
     padding: 0;
+
+    margin-left: ${({ hidden }) => (hidden ? '-5rem' : '0')};
+    opacity: ${({ hidden }) => hidden ? '0' : '1'};
+    transition: opacity ${({ theme, hidden }) => AnimationDurTFn(theme, !hidden)};
 
     &:focus {
         outline: none;

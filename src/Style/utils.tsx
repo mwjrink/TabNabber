@@ -8,3 +8,7 @@ export function BoxShadow(height: number): string {
         `;
 }
 
+export function AnimationDurTFn(theme: any, animIn: 'out' | 'in' | boolean) {
+    if (animIn === 'in' || animIn === true) return theme.animation.inSpeed.concat(' ', theme.animation.inTimingFn);
+    if (animIn === 'out' || animIn === false) return theme.animation.outSpeed.concat(' ', theme.animation.outTimingFn);
+}

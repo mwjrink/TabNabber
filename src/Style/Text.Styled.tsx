@@ -1,15 +1,15 @@
 import styled, { css } from 'styled-components';
 
 interface TextThemeTemplate {
-    font: string;
+    fontFamily: string;
     fontSize: string;
     fontWeight: string;
     letterSpacing: string;
 }
 
-function CreateStyledTextSnippet(obj: TextThemeTemplate) {
+export function CreateStyledTextSnippet(obj: TextThemeTemplate) {
     return css`
-        font: ${obj.font};
+        font-family: ${obj.fontFamily};
         font-size: ${obj.fontSize};
         font-weight: ${obj.fontWeight};
         letter-spacing: ${obj.letterSpacing};
