@@ -57,3 +57,5 @@ function SearchBar({ active, setActive }: SearchBarProps) {
 }
 
 export default SearchBar;
+
+// extend down from topbar?

@@ -12,8 +12,9 @@ export const OverlayDiv = styled.div<OverlayDivProps>`
     width: 100%;
     height: 100%;
     cursor: auto;
-    background: ${({ show }) => (show ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)')};
-    transition: background ${({ theme, show }) => (show ? theme.animation.inSpeed : theme.animation.outSpeed)}
+    background: black;
+    opacity: ${({ show }) => (show ? '0.5' : '0')};
+    transition: opacity ${({ theme, show }) => (show ? theme.animation.inSpeed : theme.animation.outSpeed)}
         ease-in-out;
     pointer-events: ${({ show }) => (show ? 'auto' : 'none')};
 `;

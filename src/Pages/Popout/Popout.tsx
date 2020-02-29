@@ -5,7 +5,9 @@ import TopBar from '../../Style/Components/TopBar';
 import { TabGroup } from '../../types';
 import { useSettingsContext } from '../../utils';
 import { OverlayDiv, PopoutContainer, PopoutPage } from './Styled';
-import AddFAButton from '../../Style/Components/AddFAButton';
+import FAButton from '../../Style/Components/FAButton';
+import CreateGroupPage from '../../Style/Components/CreateGroupPage';
+import AddIcon from '../../Style/Components/AddIcon';
 
 export function Popout() {
     // const [windows, setWindows] = useState<chrome.windows.Window[]>();
@@ -234,54 +236,7 @@ export function Popout() {
 
     // if (!windows) return <>Loading</>;
 
-    const createGroupsFromAllOpenTabs = () => {
-        const windowsCallback = (windows: chrome.windows.Window[]) => {
-            const groups: TabGroup[] = windows
-                // .filter((w) => w.type === 'normal')
-                .map((window) => ({
-                    name: String(window.id),
-                    created: new Date(),
-                    incognito: window.incognito,
-                    tabs: window
-                        .tabs!.filter((t: any) => !t.url.startsWith('chrome://'))
-                        .map((tab: any) => {
-                            // settings use pending urls
-                            let url = tab.pendingUrl ?? tab.url;
-                            let favIconUrl = tab.favIconUrl;
-
-                            if (
-                                settings.unsuspendTabs &&
-                                url?.startsWith('chrome-extension://') &&
-                                url?.includes('/suspended.html#ttl=')
-                            ) {
-                                const index = url.indexOf('&uri=');
-                                const value = url.substr(index + '&uri='.length);
-                                // this parsing should be done elsewhere and I should
-                                // not be modifying params here but this is here for now
-                                url = value;
-                                favIconUrl = 'http://www.google.com/s2/favicons?domain=' + url;
-                            }
-
-                            if (!Boolean(favIconUrl)) {
-                                favIconUrl = 'http://www.google.com/s2/favicons?domain=' + url;
-                            }
-
-                            return {
-                                title: tab.title!,
-                                url: url!,
-                                favIconUrl: favIconUrl!,
-                                index: tab.index,
-                                pinned: tab.pinned,
-                                incognito: tab.incognito,
-                            };
-                        }),
-                }));
-
-            setTabGroups((current) => [...groups, ...current]);
-        };
-
-        chrome?.windows?.getAll({ populate: true }, windowsCallback);
-    };
+    const [creatingGroup, setCreatingGroup] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('TabNabber_TabGroups', JSON.stringify(tabGroups));
@@ -298,7 +253,10 @@ export function Popout() {
             <OverlayDiv onClick={() => setNavDrawerOpen(false)} show={navDrawerOpen} />
             <Drawer open={navDrawerOpen} />
             {/* // TODO: @Max, make this popup a screen for choosing the name and tabs for a new group (with close tabs option) */}
-            <AddFAButton onClick={createGroupsFromAllOpenTabs} />
+            <FAButton onClick={() => setCreatingGroup(true)}>
+                <AddIcon />
+            </FAButton>
+            <CreateGroupPage show={creatingGroup} setCreatingGroup={setCreatingGroup} />
         </PopoutContainer>
     );
 }

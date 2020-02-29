@@ -32,6 +32,7 @@ export const StyledDrawer = styled.nav<StyledDrawerProps>`
         font-weight: bold;
         letter-spacing: 0.5rem;
         color: ${({ theme }) => theme.colors.onSurface};
+        /* // TODO: @Max, make this not use background */
         background: ${({ theme }) => theme.colors.surface};
         text-decoration: none;
         transition: background ${({ theme, open }) => (open ? theme.animation.inSpeed : theme.animation.outSpeed)} linear;

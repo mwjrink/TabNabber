@@ -35,6 +35,7 @@ export const StyledBurger = styled.button<StyledBurgerProps>`
         /* (toggled ? theme.colors.onSurface :  */
         border-radius: 10px;
         transition: all 0.3s linear;
+        transition-property: opacity, transform;
         position: relative;
         transform-origin: 1px;
 
