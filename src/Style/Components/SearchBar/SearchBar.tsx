@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyledSearchBar, StyledSearchBarTextInput } from './SearchBar.Styled';
 
 interface SearchBarProps {
-    active: boolean;
-    setActive: (value: boolean) => void;
+    searchCallback: (value: string) => void;
 }
 
-function SearchBar({ active, setActive }: SearchBarProps) {
+function SearchBar() {
+    const [active, setActive] = useState(false);
     const [inputField, setInputField] = useState<HTMLInputElement>();
 
     const escapeListener = (event: KeyboardEvent) => {
@@ -36,22 +36,23 @@ function SearchBar({ active, setActive }: SearchBarProps) {
                 // onMouseEnter={() => setActive(true)}
                 // onMouseLeave={() => setActive(false)}
             ></StyledSearchBar>
-            {active && (
-                <StyledSearchBarTextInput
-                    ref={(input) => setInputField(input!)}
-                    placeholder="Search..."
-                    onKeyDown={(event) => {
-                        if (event.key === 'Enter') {
-                            setActive(false);
-                            submit();
-                        }
+            {/* {active && ( */}
+            <StyledSearchBarTextInput
+                hidden={!active}
+                ref={(input) => setInputField(input!)}
+                placeholder="Search..."
+                onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                        setActive(false);
+                        submit();
+                    }
 
-                        if (event.key === 'Escape') {
-                            setActive(false);
-                        }
-                    }}
-                />
-            )}
+                    if (event.key === 'Escape') {
+                        setActive(false);
+                    }
+                }}
+            />
+            {/* )} */}
         </>
     );
 }

@@ -1,4 +1,10 @@
 {
   "arrowLeft": "flat/arrow-left",
-  "arrowRight": "flat/arrow-right"
+  "arrowRight": "flat/arrow-right",
+  "trash": "flat/trash",
+  "folder": "flat/folder",
+  "exit": "flat/exit",
+  "lock": "flat/lock",
+  "tag": "flat/tag",
+  "check": "flat/check"
 }

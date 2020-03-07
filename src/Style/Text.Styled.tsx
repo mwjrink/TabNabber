@@ -13,6 +13,7 @@ export function CreateStyledTextSnippet(obj: TextThemeTemplate) {
         font-size: ${obj.fontSize};
         font-weight: ${obj.fontWeight};
         letter-spacing: ${obj.letterSpacing};
+        text-rendering: optimizeLegibility;
     `;
 }
 

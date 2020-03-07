@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Page } from '../../Style/Containers.Styled';
 
 export function Manager() {
+    // need to register and run a background script in order to use chrome api
     return (
         <Page>
             <Card style={{ height: '300px', width: '200px' }}>Hello World! ~ Manager</Card>

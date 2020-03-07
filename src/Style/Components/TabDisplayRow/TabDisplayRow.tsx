@@ -1,6 +1,13 @@
 import React from 'react';
 import { Tab } from '../../../types';
-import { Favicon, HeaderContainer, NewWindowButton, StyledTabDisplayRow, Title, TagsContainer } from './TabDisplayRow.Styled';
+import {
+    Favicon,
+    HeaderContainer,
+    NewWindowButton,
+    StyledTabDisplayRow,
+    Title,
+    TagsContainer,
+} from './TabDisplayRow.Styled';
 
 interface TabDisplayRowProps {
     tab: Tab;
@@ -13,36 +20,14 @@ interface TabDisplayRowProps {
     //     incognito: boolean;
     // }
     incognito: boolean;
+    onClick: (index: number) => void;
+    selected: boolean;
+    index: number;
 }
 
-function TabDisplayRow({ tab, incognito }: TabDisplayRowProps) {
-    // const openBackgroundTab = () => {
-    //     var a = document.createElement("a");
-    //     a.href = tab.url;
-    //     var evt = document.createEvent("MouseEvents");
-    //     //the tenth parameter of initMouseEvent sets ctrl key
-    //     evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0,
-    //                                 false, false, false, true, 0, null);
-    //     a.dispatchEvent(evt);
-    // };
-
-    const click = () => {
-        if (chrome.tabs) {
-            chrome.tabs.create({
-                // index?: number;
-                // openerTabId?: number;
-                url: tab.url,
-                pinned: tab.pinned,
-                // windowId?: number;
-                active: false,
-                selected: false,
-            });
-            // event.
-        }
-    };
-
+function TabDisplayRow({ tab, incognito, onClick, selected, index }: TabDisplayRowProps) {
     return (
-        <StyledTabDisplayRow onClick={click}>
+        <StyledTabDisplayRow selected={selected} onClick={() => onClick(index)}>
             <HeaderContainer>
                 <Favicon src={tab.favIconUrl} />
                 <Title>{tab.title}</Title>

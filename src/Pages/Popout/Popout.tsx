@@ -1,24 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer, useRef } from 'react';
 import Drawer from '../../Style/Components/Drawer';
 import GroupCard from '../../Style/Components/GroupCard';
 import TopBar from '../../Style/Components/TopBar';
-import { TabGroup } from '../../types';
+import { TabGroup, Tab } from '../../types';
 import { useSettingsContext } from '../../utils';
 import { OverlayDiv, PopoutContainer, PopoutPage } from './Styled';
 import FAButton from '../../Style/Components/FAButton';
 import CreateGroupPage from '../../Style/Components/CreateGroupPage';
 import AddIcon from '../../Style/Components/AddIcon';
+import { FAButtonIcon } from '../../Style/Components/FAButton/FAButton.Styled';
+
+type State = 'MainPage' | 'CreatingGroup';
+interface AppState {
+    title: string;
+    key: State;
+    FABOnClick?: () => void;
+    nextState: State;
+    FABIcon: JSX.Element;
+}
 
 export function Popout() {
-    // const [windows, setWindows] = useState<chrome.windows.Window[]>();
     const [navDrawerOpen, setNavDrawerOpen] = useState(false);
     const [tabGroups, setTabGroups] = useState<TabGroup[]>([]);
+    const tabRetriever = useRef<() => Tab[]>(() => []);
+
+    const addTabGroup = (group: TabGroup) => setTabGroups((value) => [...value, group]);
+
+    const modifyTabGroup = (group: TabGroup, index: number) =>
+        setTabGroups((value) => [...value.slice(0, index), group, ...value.slice(index + 1)]);
+
+    const deleteTabGroup = (index: number) =>
+        setTabGroups((value) => [...value.slice(0, index), ...value.slice(index + 1)]);
+
+    const initialReducerState: AppState = {
+        title: 'Groups',
+        key: 'MainPage',
+        FABOnClick: undefined,
+        nextState: 'CreatingGroup',
+        FABIcon: <AddIcon />,
+    };
+
+    function reducer(state: AppState, action: State): AppState {
+        switch (action) {
+            case 'MainPage':
+                return {
+                    title: 'Groups',
+                    key: action,
+                    FABOnClick: undefined,
+                    nextState: 'CreatingGroup',
+                    FABIcon: <AddIcon />,
+                };
+            case 'CreatingGroup':
+                return {
+                    title: 'Nab Tabs',
+                    key: action,
+                    FABOnClick: () =>
+                        addTabGroup({
+                            name: new Date().toLocaleString(),
+                            created: new Date(),
+                            tabs: tabRetriever.current(),
+                            incognito: false,
+                            tags: [],
+                        }),
+                    nextState: 'MainPage',
+                    FABIcon: <FAButtonIcon src="icons/icons/svg/check.svg" alt="check" invert />,
+                };
+            default:
+                throw new Error(`Unknown state was pushed: ${action}`);
+        }
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialReducerState);
 
     const settings = useSettingsContext();
-
-    // chrome.storage.sync.set({key: value}, function() {
-    //   console.log('Value is set to ' + value);
-    // });
 
     // add a UUID key or something?
     chrome?.storage?.sync.get(['TabNabberGroups'], function(result) {
@@ -36,207 +90,7 @@ export function Popout() {
         // }
     }, [setTabGroups]);
 
-    // const createExamples = (() => {
-    //     setTabGroups([
-    //         {
-    //             name: 'Group 1',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: true,
-    //                     incognito: false,
-    //                 },
-    //                 {
-    //                     title: 'tab 2',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //                 {
-    //                     title: 'tab 3',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //                 {
-    //                     title: 'tab 4',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //                 {
-    //                     title: 'tab 5',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: true,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 2',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 3',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 4',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 5',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 6',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 7',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 8',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             name: 'Group 9',
-    //             created: new Date(),
-    //             incognito: false,
-    //             tabs: [
-    //                 {
-    //                     title: 'tab 1',
-    //                     url: 'string', // pendingUrl?: string,
-    //                     favIconUrl: 'string',
-    //                     // index: number, ???
-    //                     pinned: false,
-    //                     incognito: false,
-    //                 },
-    //             ],
-    //         },
-    //     ]);
-    // }, [setTabGroups]);
-
-    // chrome.tabs.getAllInWindow(windowId, function callback);
-    // let windows: chrome.windows.Window[];
-
-    // Window {
-    //     /**
-    //      * The type of browser window this is.
-    //      * One of: "normal", "popup", "panel", "app", or "devtools"
-    //      */
-    //      type: string;
-    // }
-
-    // chrome?.windows?.getAll({ populate: true }, (windows: chrome.windows.Window[]) => setWindows(windows));
-
-    // nab selected tabs, Tab { selected: boolean }
-    // keep incog groups as incog, Window or Tab { incognito: boolean }
-
-    // chrome.tabs.remove(integer or array of integer tabIds, function callback)
-
-    // LINK TO MANAGER
-    // let link = '';
-    // chrome?.management?.getSelf((result: chrome.management.ExtensionInfo) => {
-    //     link = result.homepageUrl ?? '';
-    //     link += '/Manager.html';
-    // });
-
     // if (!windows) return <>Loading</>;
-
-    const [creatingGroup, setCreatingGroup] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('TabNabber_TabGroups', JSON.stringify(tabGroups));
@@ -244,19 +98,34 @@ export function Popout() {
 
     return (
         <PopoutContainer width={settings.width} height={settings.height}>
-            <TopBar navDrawerOpen={navDrawerOpen} setNavDrawerOpen={setNavDrawerOpen} />
             <PopoutPage flexDirection="column" justifyContent="flex-start">
-                {tabGroups.map((element, index) => (
-                    <GroupCard key={index} group={element} index={index} />
+                {tabGroups.sort((a, b) => b.created.getTime() - a.created.getTime()).map((group, index) => (
+                    <GroupCard
+                        key={group.created.toString()}
+                        group={group}
+                        index={index}
+                        deleteTabGroup={() => deleteTabGroup(index)}
+                        modifyTabGroup={(group: TabGroup) => modifyTabGroup(group, index)}
+                    />
                 ))}
             </PopoutPage>
+
             <OverlayDiv onClick={() => setNavDrawerOpen(false)} show={navDrawerOpen} />
             <Drawer open={navDrawerOpen} />
-            {/* // TODO: @Max, make this popup a screen for choosing the name and tabs for a new group (with close tabs option) */}
-            <FAButton onClick={() => setCreatingGroup(true)}>
-                <AddIcon />
+
+            <CreateGroupPage show={state.key === 'CreatingGroup'} tabRetriever={tabRetriever} />
+
+            {/* KEEP THIS LAST */}
+            <TopBar burgerToggled={navDrawerOpen} toggleBurger={setNavDrawerOpen} title={state.title} />
+
+            <FAButton
+                onClick={() => {
+                    state.FABOnClick && state.FABOnClick();
+                    dispatch(state.nextState);
+                }}
+            >
+                {state.FABIcon}
             </FAButton>
-            <CreateGroupPage show={creatingGroup} setCreatingGroup={setCreatingGroup} />
         </PopoutContainer>
     );
 }

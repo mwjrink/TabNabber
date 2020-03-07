@@ -8,7 +8,7 @@ export const Divider = styled.hr<DividerProps>`
     margin: 0 1rem;
     padding: 0;
     border: none;
-    height: 1px;
+    height: ${({ shown }) => shown ? '1' : '0'}px;
     background: ${({ theme }) => theme.colors.unfocusedLight};
     opacity: ${({ shown }) => shown ? '1' : '0'};
 `;

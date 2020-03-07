@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { AnimationDurTFn } from '../../utils';
+import FAButton from '../FAButton';
 
 interface StyledCreateGroupPageProps {
     hidden: boolean;
@@ -13,9 +14,7 @@ const grow = (screenWidth: number, screenHeight: number) => keyframes`
 
     opacity: 1;
 
-    transform: translate(calc(${screenWidth} - 6rem), calc(${screenHeight} - 6rem));
-    /* scaleY(calc(2rem/${screenHeight})); */
-     /* scaleX(calc(calc(2rem/100vw)))  */
+    transform: translate(calc(${screenWidth}px - 16px), calc(${screenHeight}px - 16px)) scaleY(calc(56/${screenHeight})) scaleX(calc(56/${screenWidth}));
 }
 
 100% {
@@ -28,23 +27,37 @@ const grow = (screenWidth: number, screenHeight: number) => keyframes`
 `;
 
 export const StyledCreateGroupPage = styled.div<StyledCreateGroupPageProps>`
-    background-color: ${({ theme }) => theme.colors.error};
+    background-color: ${({ theme }) => theme.colors.background};
     border-radius: 0px;
 
-    transform: scaleY(1) scaleX(1) translate(0, 0);
+    transform-origin: ${({ screenWidth, screenHeight }) =>
+        `calc(${screenWidth}px - 26px) calc(${screenHeight}px - 26px)`};
+    transform: ${({ screenWidth, screenHeight, hidden }) =>
+        hidden
+            ? `/*translate(calc(${screenWidth}px - 16px), calc(${screenHeight}px - 16px))*/ scaleY(calc(39/${screenHeight})) scaleX(calc(39/${screenWidth}))`
+            : `scaleY(1) scaleX(1) translate(0, 0);`};
+    opacity: ${({ hidden }) => (hidden ? '0' : '1')};
+    transition: transform ${({ hidden, theme }) => AnimationDurTFn(theme, hidden)};
+    transition-property: transform, opacity;
 
     position: absolute;
     bottom: 0;
     right: 0;
 
-    max-width: 100%;
     width: 100%;
-    max-height: 100%;
-    height: 100%;
+    height: 90%;
 
-    opacity: 1;
+    padding: ${({ theme }) => theme.spacing.margin};
+    padding-top: 0;
 
-    animation: ${({ screenWidth, screenHeight }) => grow(screenWidth, screenHeight)}
-        ${({ hidden, theme }) =>
-            [AnimationDurTFn(theme, hidden), '0', '1', hidden ? ' reverse' : ' normal', 'none'].join(' ')};
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    overflow: scroll;
+
+    /* animation: ${({ screenWidth, screenHeight }) => grow(screenWidth, screenHeight)}\
+     ${({ hidden, theme }) =>
+         [AnimationDurTFn(theme, hidden), '0', '1', hidden ? 'reverse' : 'normal', 'none'].join(' ')}; */
 `;

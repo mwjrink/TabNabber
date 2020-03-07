@@ -8,7 +8,9 @@ interface StyledToggleChevronProps {
 
 export const StyledToggleChevron = styled.span<StyledToggleChevronProps>`
     width: 1rem;
+    min-width: 1rem;
     height: 1rem;
+    min-height: 1rem;
     display: inline-block;
     position: relative;
 

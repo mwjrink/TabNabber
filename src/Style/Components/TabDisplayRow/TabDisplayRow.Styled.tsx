@@ -1,7 +1,11 @@
 import styled, { css } from 'styled-components';
 import { Text } from '../../Text.Styled';
 
-export const StyledTabDisplayRow = styled.div`
+interface StyledTabDisplayRowProps {
+    selected: boolean;
+}
+
+export const StyledTabDisplayRow = styled.div<StyledTabDisplayRowProps>`
     position: relative;
     display: flex;
     flex-direction: row;
@@ -14,8 +18,14 @@ export const StyledTabDisplayRow = styled.div`
     text-decoration: none;
     color: ${({ theme }) => theme.colors.onSurface};
 
+    background: ${({ selected, theme }) => (selected ? theme.colors.unfocused : theme.colors.surface)};
+
     &:hover {
-        background: lightgrey;
+        background: ${({ selected, theme }) => (selected ? theme.colors.unfocused : theme.colors.unfocusedLight)};
+    }
+
+    &:active {
+        background: ${({ theme }) => theme.colors.unfocused};
     }
 `;
 

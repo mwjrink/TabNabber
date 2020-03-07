@@ -27,7 +27,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "build:icons": "svg-icon build --source ./icons.json --target public/icons --name icons"
+    "build:icons": "svg-icon build --source ./icons.json --target public/icons --name icons",
+    "compile": "yarn build:icons; yarn build;"
   },
   "eslintConfig": {
     "extends": "react-app"

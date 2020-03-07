@@ -7,7 +7,7 @@ interface FAButtonProps {
 }
 
 function FAButton({ onClick, children }: FAButtonProps) {
-    return <StyledFAButton onClick={onClick}>{children}</StyledFAButton>;
+    return <StyledFAButton heightBefore={8} heightAfter={16} onClick={onClick}>{children}</StyledFAButton>;
 }
 
 export default FAButton;

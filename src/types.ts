@@ -16,6 +16,8 @@ export interface TabGroup {
     created: Date;
     tabs: Tab[];
     incognito: boolean;
+    tags: string[];
+    // uuid: string;
 }
 
 export interface GroupFolder {

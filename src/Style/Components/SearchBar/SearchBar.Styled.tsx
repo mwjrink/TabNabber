@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { CreateStyledTextSnippet } from '../../Text.Styled';
 import { AnimationDurTFn } from '../../utils';
 
@@ -11,19 +11,12 @@ export const StyledSearchBar = styled.div<StyledSearchBarProps>`
     width: 2rem;
     height: 2rem;
     position: relative;
+    cursor: pointer;
 
     &::before {
         content: ' ';
-        /* // USE THEME */
-        /* // USE THEME */
-        /* // USE THEME */
-        /* // USE THEME */
-        /* // USE THEME */
-        /* // USE THEME */
-        /* // USE THEME */
-        /* // USE THEME */
-        border-radius: 50vmin;
-        border: 3px solid white;
+        border-radius: 50%;
+        border: 3px solid ${({ theme }) => theme.colors.onPrimary};
 
         width: 1.6rem;
         height: 1.6rem;
@@ -67,16 +60,7 @@ export const StyledSearchBar = styled.div<StyledSearchBarProps>`
     } */
 `;
 
-const Appear = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
-export const StyledSearchBarTextInput = styled.input`
+export const StyledSearchBarTextInput = styled.input<{ hidden: boolean }>`
     color: white;
 
     background: ${({ theme }) => theme.colors.primary};
@@ -88,13 +72,16 @@ export const StyledSearchBarTextInput = styled.input`
     padding: 0 1rem;
     outline: none;
     border: none;
+    display: flex;
+    pointer-events: ${({ hidden }) => hidden ? 'none' : 'auto'};
 
     color: ${({ theme }) => theme.colors.onPrimary};
 
     ${({ theme }) => CreateStyledTextSnippet(theme.text.Subtitle1)};
 
     /* // this should not be an animation */
-    animation: ${Appear} ${({ theme }) => AnimationDurTFn(theme, 'in')} 0 1;
+    transition: opacity ${({ theme, hidden }) => AnimationDurTFn(theme, !hidden)};
+    opacity: ${({ hidden }) => hidden ? '0' : '1'};
 
     &::placeholder {
         color: ${({ theme }) => theme.colors.onPrimary};

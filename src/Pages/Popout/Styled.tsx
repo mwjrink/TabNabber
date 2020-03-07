@@ -11,7 +11,7 @@ export const OverlayDiv = styled.div<OverlayDivProps>`
     left: 0;
     width: 100%;
     height: 100%;
-    cursor: auto;
+    cursor: pointer;
     background: black;
     opacity: ${({ show }) => (show ? '0.5' : '0')};
     transition: opacity ${({ theme, show }) => (show ? theme.animation.inSpeed : theme.animation.outSpeed)}

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Tab } from "./types";
 
 export interface Settings {
     closeTabs: boolean;
@@ -19,4 +20,15 @@ export function CreateSettingsContext(defaultValue: Settings) {
 
 export function useSettingsContext() {
     return useContext(context);
+}
+
+export function TabFromChrome(tab: chrome.tabs.Tab) {
+    return {
+        title: tab.title,
+        url: tab.pendingUrl ?? tab.url, // pendingUrl?: string;
+        favIconUrl: tab.favIconUrl,
+        index: tab.index, // This shouldn't be nullable but I am lazy AF rn
+        pinned: tab.pinned,
+        incognito: tab.incognito,
+    } as Tab;
 }

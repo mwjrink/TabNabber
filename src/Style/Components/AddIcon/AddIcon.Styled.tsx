@@ -5,12 +5,11 @@ interface StyledAddIcon {
 }
 
 export const StyledAddIcon = styled.div<StyledAddIcon>`
-
     /* opacity: 0; */
     pointer-events: none;
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
 
     &::before,
     &::after {
@@ -20,16 +19,16 @@ export const StyledAddIcon = styled.div<StyledAddIcon>`
     }
 
     &::before {
-        width: 2px;
-        height: 20px;
-        left: 9px;
         top: 0;
+        left: 11px;
+        width: 2px;
+        height: 24px;
     }
 
     &::after {
-        width: 20px;
-        height: 2px;
-        top: 9px;
         left: 0;
+        top: 11px;
+        width: 24px;
+        height: 2px;
     }
 `;

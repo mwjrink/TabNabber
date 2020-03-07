@@ -16,7 +16,7 @@ export const StyledTopBar = styled.div<FlexProps & DefaultProps>`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
+    /* z-index: 10; */
 
     padding: 0px 2rem;
 
