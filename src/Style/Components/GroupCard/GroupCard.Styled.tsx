@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { BoxShadowHoverFragment, BoxShadowHoverFragmentProps } from '../../CommonEffects.Styled';
-import { CreateStyledTextSnippet } from '../../Text.Styled';
 
 interface StyledGroupCardProps {
     expanded: boolean;
@@ -83,6 +82,7 @@ export const OptionsContainer = styled.div<OptionsContainer>`
     width: 100%;
     height: 2rem;
     padding: 0 1rem;
+    margin: 2px 0;
 
     display: ${({ shown }) => (shown ? 'flex' : 'none')};
     justify-content: space-evenly;
@@ -90,9 +90,11 @@ export const OptionsContainer = styled.div<OptionsContainer>`
 `;
 
 export const GroupActionButton = styled.div`
-    height: 1rem;
-    width: 1rem;
-    margin: 0.5rem;
+    height: 2rem;
+    min-height: 2rem;
+    width: 2rem;
+    min-width: 2rem;
+    padding: 0.5rem;
     position: relative;
     display: flex;
     justify-content: center;
@@ -118,42 +120,3 @@ export const GroupActionButton = styled.div`
     }
 `;
 
-export const TagsInput = styled.input`
-    flex-grow: 1;
-    height: 100%;
-    outline: none;
-    border-width: 0 1px 0 1px;
-    border-color: ${({ theme }) => theme.colors.unfocused};
-    border-style: solid;
-    color: ${({ theme }) => theme.colors.onSurface};
-    padding: 0.5rem 0;
-
-    ${({ theme }) => CreateStyledTextSnippet(theme.text.Body1)};
-`;
-
-interface PillTagProps {
-    pillColor: string;
-}
-
-export const PillTag = styled.div<PillTagProps>`
-    border-radius: 50vmin;
-    height: 1.5rem;
-    padding: 0.5rem 0;
-    margin: 0.1rem 0;
-    background-color: ${({ pillColor }) => pillColor};
-    color: black;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    text-transform: uppercase;
-
-    ${({ theme }) => CreateStyledTextSnippet(theme.text.Body1)}
-
-    overflow: scroll;
-
-    /* &::before {
-
-    } */
-`;

@@ -6,8 +6,8 @@ import {
     NewWindowButton,
     StyledTabDisplayRow,
     Title,
-    TagsContainer,
 } from './TabDisplayRow.Styled';
+import { TagsContainer } from '../TagsInputBar/TagsInputBar.Styled';
 
 interface TabDisplayRowProps {
     tab: Tab;

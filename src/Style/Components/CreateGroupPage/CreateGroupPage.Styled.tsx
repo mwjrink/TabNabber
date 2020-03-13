@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import { AnimationDurTFn } from '../../utils';
-import FAButton from '../FAButton';
+import { CreateStyledTextSnippet } from '../../Text.Styled';
+import { AnimationDurTFn, BoxShadow } from '../../utils';
 
 interface StyledCreateGroupPageProps {
     hidden: boolean;
@@ -60,4 +60,31 @@ export const StyledCreateGroupPage = styled.div<StyledCreateGroupPageProps>`
     /* animation: ${({ screenWidth, screenHeight }) => grow(screenWidth, screenHeight)}\
      ${({ hidden, theme }) =>
          [AnimationDurTFn(theme, hidden), '0', '1', hidden ? 'reverse' : 'normal', 'none'].join(' ')}; */
+`;
+
+export const BottomBar = styled.div`
+    box-shadow: ${BoxShadow(4)};
+    background: ${({ theme }) => theme.colors.surface};
+    height: 88px;
+    width: 100%;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 0 0.5rem;
+`;
+
+export const NameInput = styled.input`
+    height: 50%;
+    width: 100%;
+    outline: none;
+    border: none;
+    ${({ theme }) => CreateStyledTextSnippet(theme.text.Body1)};
+    flex-grow: 1;
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { TabGroup } from '../../../types';
 import { Divider } from '../../Layout.Styled';
@@ -6,15 +6,14 @@ import { Text } from '../../Text.Styled';
 import TabDisplayRow from '../TabDisplayRow';
 import ToggleChevron from '../ToggleChevron';
 import {
+    GroupActionButton,
+    OptionsContainer,
     StyledGroupCard,
     StyledGroupCardTopAppBar,
     StyledTabListContainer,
     StyledTitleBar,
-    OptionsContainer,
-    GroupActionButton,
-    TagsInput,
-    PillTag,
 } from './GroupCard.Styled';
+import TagsInputBar from '../TagsInputBar';
 
 interface GroupCardProps {
     group: TabGroup;
@@ -26,10 +25,9 @@ interface GroupCardProps {
     // tabs: Tab[];
 }
 
-function GroupCard({ group, index, deleteTabGroup }: GroupCardProps) {
+function GroupCard({ group, index, deleteTabGroup, modifyTabGroup }: GroupCardProps) {
     const [expanded, setExpanded] = useState(false);
-    const [inputValue, setInputValue] = useState('');
-    const [tags, setTags] = useState<string[]>([]);
+    const [tags, setTags] = useState<string[]>(group.tags);
     const theme = useTheme() as any;
 
     const dateString = new Date(group?.created)
@@ -65,28 +63,13 @@ function GroupCard({ group, index, deleteTabGroup }: GroupCardProps) {
         }
     };
 
-    const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const current = event.target.value;
-        if (current.endsWith(' ') || current.endsWith(',')) {
-            if (current.length > 1) {
-                setTags((value) => [...value, current.trim()]);
-                setInputValue('');
-            }
-        } else if (current.length === 0) {
-            setInputValue(tags[tags.length - 1]);
-            setTags((value) => value.slice(0, value.length - 1));
-        }
-    };
-
-    // const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    //     if(event.key === 'Backspace') {
-    //
-    //     }
-    //     if(event.key === 'Delete'){
-    //
-    //     }
-    //     setInputValue((value) => sdfjlds);
-    // }
+    useEffect(() => {
+        modifyTabGroup({
+            ...group,
+            tags,
+        });
+        // eslint-disable-next-line
+    }, [tags.length]);
 
     return (
         <StyledGroupCard
@@ -107,23 +90,17 @@ function GroupCard({ group, index, deleteTabGroup }: GroupCardProps) {
             <Divider shown={expanded} />
             <OptionsContainer shown={expanded}>
                 <GroupActionButton onClick={() => console.log('tag')}>
-                    <img src="icons/icons/svg/tag.svg" alt='tag' />
+                    <img src="icons/icons/svg/tag.svg" alt="tag" />
                 </GroupActionButton>
-                <TagsInput onChange={onInputChanged} value={inputValue} />
-                    {
-                    // group.
-                    // onKeyDown={onInputKeyDown}
-                    tags.map((tag) => (
-                        <PillTag pillColor="#2244FFAA">{tag}</PillTag>
-                    ))}
+                <TagsInputBar tags={tags} setTags={setTags} />
                 <GroupActionButton onClick={() => console.log('exit')}>
-                    <img src="icons/icons/svg/exit.svg" alt='share' />
+                    <img src="icons/icons/svg/exit.svg" alt="share" />
                 </GroupActionButton>
                 <GroupActionButton onClick={() => console.log('lock')}>
-                    <img src="icons/icons/svg/lock.svg" alt='lock' />
+                    <img src="icons/icons/svg/lock.svg" alt="lock" />
                 </GroupActionButton>
                 <GroupActionButton onClick={deleteTabGroup}>
-                    <img src="icons/icons/svg/trash.svg" alt='delete' />
+                    <img src="icons/icons/svg/trash.svg" alt="delete" />
                 </GroupActionButton>
             </OptionsContainer>
             <Divider shown={expanded} />

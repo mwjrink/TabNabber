@@ -12,10 +12,10 @@ import { TabFromChrome } from '../../../utils';
 
 interface WindowCardProps {
     window: chrome.windows.Window;
-    setTabRetriever: (value: () => Tab[]) => void;
+    setTabsCallback: (value: Tab[]) => void;
 }
 
-function WindowCard({ window, setTabRetriever }: WindowCardProps) {
+function WindowCard({ window, setTabsCallback }: WindowCardProps) {
     // only show incog groups/tabs if you are in an incog window (setting to separate incog from normal)
     // probably just pass this in
     // chrome.windows.getCurrent({ populate: false, windowTypes: undefined }, (window) => {
@@ -34,15 +34,10 @@ function WindowCard({ window, setTabRetriever }: WindowCardProps) {
 
     const tabs = window.tabs!.map((tab) => TabFromChrome(tab));
 
-    useEffect(
-        () =>
-            setTabRetriever(() => {
-                return selectedTabs
-                    .map((selected, index) => (selected ? tabs[index] : undefined))
-                    .filter((sel) => sel !== undefined) as Tab[];
-            }),
-        [selectedTabs]
-    );
+    useEffect(() =>
+            setTabsCallback(window.tabs?.filter((_, index) => selectedTabs[index]).map((t) => TabFromChrome(t)) ?? []),
+        // eslint-disable-next-line
+        [selectedTabs, setTabsCallback]);
 
     return (
         <StyledWindowCard heightBefore={1} heightAfter={4} expanded={false}>

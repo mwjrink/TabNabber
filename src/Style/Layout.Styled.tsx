@@ -11,4 +11,5 @@ export const Divider = styled.hr<DividerProps>`
     height: ${({ shown }) => shown ? '1' : '0'}px;
     background: ${({ theme }) => theme.colors.unfocusedLight};
     opacity: ${({ shown }) => shown ? '1' : '0'};
+    width: 100%;
 `;

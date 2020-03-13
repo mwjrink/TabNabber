@@ -102,10 +102,3 @@ export const RippleCss = css`
         }
     }
 `;
-
-export const TagsContainer = styled.div`
-    height: 100%;
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-`;

@@ -1,35 +1,51 @@
-import React, { useEffect, useState, useRef, MutableRefObject } from 'react';
+import React, { MutableRefObject, useEffect, useRef, useState, useMemo } from 'react';
 import { Tab, TabGroup } from '../../../types';
 import { useSettingsContext } from '../../../utils';
-import FAButton from '../FAButton';
-import { FAButtonIcon } from '../FAButton/FAButton.Styled';
+import TagsInputBar from '../TagsInputBar';
 import WindowCard from '../WindowCard';
-import { StyledCreateGroupPage } from './CreateGroupPage.Styled';
+import { BottomBar, NameInput, StyledCreateGroupPage } from './CreateGroupPage.Styled';
+import { Divider } from '../../Layout.Styled';
 
 interface CreateGroupPageProps {
     show: boolean;
-    tabRetriever: MutableRefObject<() => Tab[]>;
+    tabGroup: MutableRefObject<TabGroup | undefined>;
 }
 
-function CreateGroupPage({ show, tabRetriever }: CreateGroupPageProps) {
+function CreateGroupPage({ show, tabGroup }: CreateGroupPageProps) {
     const settings = useSettingsContext();
     const [windows, setWindows] = useState<chrome.windows.Window[]>([]);
-    const retrievers = useRef<(() => Tab[])[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
+    const [tabs, setTabs] = useState<Record<number, Tab[]>>([]);
+    const nameInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        setWindows([]);
         chrome?.windows?.getAll({ populate: true }, (windows: chrome.windows.Window[]) => setWindows(windows));
-
-        if (!show) {
-            retrievers.current = [];
-        }
+        return () => setWindows([]);
     }, [show]);
 
-    const setTabRetriever = (value: () => Tab[]) => {
-        retrievers.current = [...retrievers.current, value];
-    };
+    const setTabsCallback = useMemo(
+        () => (index: number, value: Tab[]) => {
+            setTabs((current) => {
+                const copy = { ...current };
+                copy[index] = value;
+                return copy;
+            });
+        },
+        [setTabs]
+    );
 
-    tabRetriever.current = () => retrievers.current.flatMap((retriever) => retriever());
+    useEffect(() => {
+        if (tabs !== {}) {
+            tabGroup.current = {
+                name: nameInputRef.current?.value ?? new Date().toLocaleString(),
+                created: new Date(),
+                incognito: false, // TODO: @Max, filler
+                tags,
+                tabs: Object.values(tabs).flat(),
+            };
+        }
+        // eslint-disable-next-line
+    }, [nameInputRef, tags.length, tabs]);
 
     return (
         // pseudo element for animating
@@ -37,13 +53,21 @@ function CreateGroupPage({ show, tabRetriever }: CreateGroupPageProps) {
         <StyledCreateGroupPage hidden={!show} screenWidth={settings.width} screenHeight={settings.height}>
             {/* style={index !== 0 ? { marginTop: theme.spacing.gutter } */}
             {show &&
-                windows.map((window) => (
+                windows.map((window, index) => (
                     <WindowCard
                         key={String(window.id) + new Date().getTime()}
                         window={window}
-                        setTabRetriever={setTabRetriever}
+                        setTabsCallback={(value: Tab[]) => setTabsCallback(index, value)}
                     />
                 ))}
+            <BottomBar>
+                <NameInput
+                    ref={nameInputRef}
+                    placeholder="Enter a name..."
+                />
+                <Divider shown />
+                <TagsInputBar tags={tags} setTags={setTags} />
+            </BottomBar>
         </StyledCreateGroupPage>
     );
 }
